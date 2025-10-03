@@ -26,7 +26,7 @@ spec:
         repoURL: https://cloudnativeapp.github.io/charts/curated
         targetRevision: 0.2.0
         path: '{{.path.path}}'
-        chart: 'cloudnativeapp/guestbook'
+        chart: 'guestbook'
         valueFiles:
           - '$values/{{.path.path}}/values.yaml'
           - '$values/{{.path.path}}/{{ cluster.name }}.yaml'
