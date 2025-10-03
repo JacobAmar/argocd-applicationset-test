@@ -1,0 +1,3 @@
+chartRepo: https://cloudnativeapp.github.io/charts/curated
+chartName: guestbook
+chartVersion: 0.2.0

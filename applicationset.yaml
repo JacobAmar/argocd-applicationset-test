@@ -7,13 +7,22 @@ spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-    - git:
-        repoURL: https://github.com/JacobAmar/argocd-applicationset-test
-        revision: HEAD
-        files:
-          - path: apps/**/*.yaml
-          - path: apps/**/values.yaml
-            exclude: true
+    - merge: 
+      mergeKeys:
+        - path
+      generators:
+      - git:
+          repoURL: https://github.com/JacobAmar/argocd-applicationset-test
+          revision: HEAD
+          files:
+            - path: apps/**/*.yaml
+            - path: apps/**/values.yaml
+              exclude: true
+      - git:
+          repoURL: https://github.com/JacobAmar/argocd-applicationset-test
+          revision: HEAD
+          files:
+            - path: apps/**/config.yaml
 
   template:
     metadata:
@@ -21,9 +30,9 @@ spec:
     spec:
       project: "default"
       sources:
-        - repoURL: 'https://cloudnativeapp.github.io/charts/curated'
-          chart: guestbook
-          targetRevision: 0.2.0
+        - repoURL: '{{ config.chartRepo }}'
+          chart: {{ config.chartName }}
+          targetRevision: {{ config.chartVersion }}
           helm:
             releaseName: '{{ index .path.segments 2 }}-{{ .path.filename | replace ".yaml" "" }}'
             valueFiles:
@@ -33,7 +42,7 @@ spec:
           targetRevision: HEAD
           ref: values
       destination:
-        server: https://kubernetes.default.svc
+        server: {{ index .path.segments 2 | replace "yaml" "" }}
         namespace: '{{index .path.segments 1 }}'
       syncPolicy:
         syncOptions:
