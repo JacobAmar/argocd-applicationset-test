@@ -12,12 +12,12 @@ spec:
         revision: HEAD
         files:
           - path: apps/*/*/*
-          - path: apps/*/*/*/values.yaml
+          - path: apps/**/values.yaml
             exclude: true
 
   template:
     metadata:
-      name: '{{ index .path.segments 2 }}'
+      name: '{{ index .path.segments 2 }}-{{ .path.filename | replace ".yaml" "" }}'
     spec:
       project: "default"
       sources:
