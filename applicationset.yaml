@@ -21,7 +21,7 @@ spec:
     metadata:
       name: '{{index .path.segments 1}}'
     spec:
-      project: "my-project"
+      project: "default"
       source:
         repoURL: https://github.com/JacobAmar/argocd-applicationset-test
         targetRevision: HEAD
@@ -32,7 +32,7 @@ spec:
           - '{{.path.path}}/{{ cluster.name }}.yaml'
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{.path.basename}}'
+        namespace: '{{.path.segments 0}}'
       syncPolicy:
         syncOptions:
         - CreateNamespace=true
