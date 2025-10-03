@@ -23,13 +23,18 @@ spec:
     spec:
       project: "default"
       source:
-        repoURL: https://github.com/JacobAmar/argocd-applicationset-test
-        targetRevision: HEAD
+        repoURL: https://cloudnativeapp.github.io/charts/curated
+        targetRevision: 0.2.0
         path: '{{.path.path}}'
-        chart: '{{index .path.segments 1}}'
+        chart: 'cloudnativeapp/guestbook'
         valueFiles:
-          - '{{.path.path}}/values.yaml'
-          - '{{.path.path}}/{{ cluster.name }}.yaml'
+          - '$values/{{.path.path}}/values.yaml'
+          - '$values/{{.path.path}}/{{ cluster.name }}.yaml'
+      sources:
+        - repoURL: https://github.com/JacobAmar/argocd-applicationset-test
+          targetRevision: HEAD
+          path: '{{.path.path}}'
+          ref: values
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{.path.segments 0}}'
