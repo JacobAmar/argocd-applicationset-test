@@ -11,7 +11,7 @@ spec:
         repoURL: https://github.com/JacobAmar/argocd-applicationset-test
         revision: HEAD
         files:
-          - path: apps/*/*/*
+          - path: apps/**/*.yaml
           - path: apps/**/values.yaml
             exclude: true
 
@@ -25,6 +25,7 @@ spec:
           chart: guestbook
           targetRevision: 0.2.0
           helm:
+            releaseName: '{{ index .path.segments 2 }}-{{ .path.filename | replace ".yaml" "" }}'
             valueFiles:
             - '$values/{{.path.path}}/values.yaml'
             - '$values/{{.path.path}}/{{.path.filename}}'
