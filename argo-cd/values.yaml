@@ -16,9 +16,8 @@ configs:
   cmp:
     create: true
     plugins:
-     gomplate-helm:
        generate:
         command: ["sh", "-c"]
         args:
           - |
-            gomplate -c .=../../$CLUSTER_VALUES_FILE -f values.gotmpl.yaml -o values.yaml | helm template . $VALUE_FILES
+            gomplate -c .=../../$CLUSTER_VALUES_FILE -f values.gotmpl.yaml -o values.yaml
