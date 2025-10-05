@@ -21,21 +21,10 @@ spec:
   project: default
 
   # Source of the application manifests
-  sources:
-    - repoURL: {{ $value.chartRepo }}
-      chart: {{ $value.chartName }}
-      targetRevision: {{ $value.chartVersion }}
-      helm:
-        releaseName: {{ $key }}
-        chart: {{ $value.chartName }}
-        repoURL: {{ $value.chartRepo }}
-        targetRevision: {{ $value.chartVersion }}
-        valueFiles:
-        - '$values/apps/{{$key}}/values.yaml'
-        - '$values/apps/{{$key}}/{{$metadata.clusterName}}.yaml'
-    - repoURL: 'https://github.com/JacobAmar/argocd-applicationset-test'
+  source:
+      repoURL: 'https://github.com/JacobAmar/argocd-applicationset-test'
       targetRevision: {{ $value.valuesRevision }}
-      ref: values
+      path: apps/{{$key}}
       plugin:
         name: helm-gomplate
         env:
@@ -49,6 +38,8 @@ spec:
           value: 'apps/{{$key}}'
         - name: CLUSTER_VALUES_FILE
           value: '$values/app-of-apps/{{$metadata.cloud}}/{{ $metadata.accountId }}/{{$metadata.region }}/{{$metadata.clusterName}}.yaml'
+        - name: VALUE_FILES
+          value: '-f $values/apps/{{$key}}/values.yaml -f $values/apps/{{$key}}/{{$metadata.clusterName}}.yaml'
   
   destination:
     server: {{ $metadata.server | default "https://kubernetes.default.svc" }}

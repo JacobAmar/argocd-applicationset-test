@@ -39,4 +39,4 @@ configs:
          command: ["sh", "-c"]
          args:
            - |
-             gomplate -c .=$CLUSTER_VALUES_FILE -f $CHART_PATH/values.gotmpl.yaml -o $CHART_PATH/values.yaml
+             gomplate -c .=$CLUSTER_VALUES_FILE -f $CHART_PATH/values.gotmpl.yaml -o $CHART_PATH/values.yaml | helm template . $VALUE_FILES
