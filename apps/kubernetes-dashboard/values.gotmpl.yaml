@@ -1,0 +1,7 @@
+app:
+  labels:
+    cluster-name: {{ .clusterName   }}
+    team: devops
+    region: {{ .region }}
+    account-id: {{ .accountId }}
+    cloud: {{ .cloud }}
