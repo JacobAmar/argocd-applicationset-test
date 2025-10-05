@@ -1,7 +1,0 @@
-metadata:
-  server: https://kubernetes.default.svc2
-  cloud: aws
-  accountId: 111111
-  region: us-east-1
-  filename: in-cluster.yaml
-  clusterName: in-cluster

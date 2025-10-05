@@ -8,9 +8,6 @@ metadata:
   finalizers:
     # The default behaviour is foreground cascading deletion
     - resources-finalizer.argocd.argoproj.io
-    # Alternatively, you can use background cascading deletion
-    # - resources-finalizer.argocd.argoproj.io/background
-  # Add labels to your application object.
   labels:
     cluster-name: "in-cluster"
     region: "us-east-1"
@@ -29,7 +26,7 @@ spec:
     # helm specific config
     helm:
       valueFiles:
-      - app-of-apps/values/aws/111111/us-east-1/in-cluster.yaml
+      - values/aws/111111/us-east-1/in-cluster.yaml
 
 
 
