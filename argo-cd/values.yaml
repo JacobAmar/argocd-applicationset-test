@@ -34,9 +34,10 @@ configs:
           command: ["sh", "-c"]
           args:
            - |
-             helm pull $CHART_NAME --repo $CHART_REPO --version $CHART_VERSION --untar --untardir $CHART_PATH
+             echo "pulling chart $ARGOCD_ENV_CHART_NAME from $ARGOCD_ENV_CHART_REPO version $ARGOCD_ENV_CHART_VERSION"
+             helm pull $ARGOCD_ENV_CHART_NAME --repo $ARGOCD_ENV_CHART_REPO --version $ARGOCD_ENV_CHART_VERSION --untar --untardir $ARGOCD_ENV_CHART_PATH
         generate:
          command: ["sh", "-c"]
          args:
            - |
-             gomplate -c .=$CLUSTER_VALUES_FILE -f $CHART_PATH/values.gotmpl.yaml -o $CHART_PATH/values.yaml | helm template . $VALUE_FILES
+             gomplate -c .=$ARGOCD_ENV_CLUSTER_VALUES_FILE -f $ARGOCD_ENV_CHART_PATH/values.gotmpl.yaml -o $ARGOCD_ENV_CHART_PATH/values.yaml | helm template $ARGOCD_ENV_CHART_PATH $ARGOCD_ENV_VALUE_FILES
