@@ -5,3 +5,8 @@ metadata:
   region: us-east-1
   filename: in-cluster.yaml
   clusterName: in-cluster
+
+applications:
+  test-namespace:
+    guestbook:
+      enabled: false
