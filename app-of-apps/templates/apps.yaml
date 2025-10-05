@@ -29,11 +29,11 @@ spec:
         name: helm-gomplate
         env:
         - name: CHART_NAME
-          value: {{ $value.chartName | quote }}
+          value: {{ $value.chartName  }}
         - name: CHART_REPO
-          value: {{ $value.chartRepo | quote }}
+          value: {{ $value.chartRepo  }}
         - name: CHART_VERSION
-          value: {{ $value.chartVersion | quote }}
+          value: {{ $value.chartVersion  }}
         - name: CHART_PATH
           value: 'apps/{{$key}}'
         - name: CLUSTER_VALUES_FILE
