@@ -1,0 +1,5 @@
+app:
+  labels:
+    cluster-name: in-cluster
+    team: devops
+    region: us-east-1
