@@ -1,0 +1,63 @@
+{{- $metadata := .Values.metadata }}
+{{- range $namespace, $namespaceValue := .Values.applications }}
+{{- range $key, $value := $namespaceValue }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ $key }}-{{ $metadata.clusterName }}
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    name: {{ $key }}
+    cloud: {{ $metadata.cloud | quote }}
+    cluster-name: {{ $metadata.clusterName | quote }}
+    account-id: {{ $metadata.accountId | quote }}
+    region: {{ $metadata.region | quote }}
+spec:
+  # The project the application belongs to.
+  project: default
+
+  # Source of the application manifests
+  sources:
+    - repoURL: {{ $value.chartRepo }}
+      chart: {{ $value.chartName }}
+      targetRevision: {{ $value.chartVersion }}
+      helm:
+        releaseName: {{ $key }}
+        valueFiles:
+        - '$values/apps/{{$key}}/values.yaml'
+        - '$values/apps/{{$key}}/{{$metadata.clusterName}}.yaml'
+    - repoURL: 'https://github.com/JacobAmar/argocd-applicationset-test'
+      targetRevision: {{ $value.valuesRevision }}
+      ref: values
+  
+  destination:
+    server: {{ $metadata.server | default "https://kubernetes.default.svc" }}
+    namespace: {{ $namespace }}
+  
+  syncPolicy:
+    automated:
+      enabled: false
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+    syncOptions:
+    - CreateNamespace=true
+    - PrunePropagationPolicy=foreground 
+    - PruneLast=true 
+    - RespectIgnoreDifferences=true
+    - ApplyOutOfSyncOnly=true
+    - SkipDryRunOnMissingResource=true
+    - Replace=false
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 10s
+
+  revisionHistoryLimit: 2
+{{- end }}
+{{- end }}
