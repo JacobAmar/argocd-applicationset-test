@@ -1,5 +1,5 @@
 metadata:
-  server: https://kubernetes.default.svc2
+  server: https://kubernetes.default.svc
   cloud: aws
   accountId: 111111
   region: us-east-1
