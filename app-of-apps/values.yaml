@@ -6,3 +6,10 @@ applications:
       chartName: guestbook
       chartVersion: 0.2.0
       valuesRevision: HEAD
+  kube-system:
+    kubernetes-dashboard:
+      enabled: true
+      chartRepo: https://kubernetes.github.io/dashboard/
+      chartName: kubernetes-dashboard
+      chartVersion: 7.13.0
+      valuesRevision: HEAD
