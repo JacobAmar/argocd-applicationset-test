@@ -1,0 +1,6 @@
+app:
+  labels:
+    team: devops
+    region: "us-east-1"
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::111111:role/in-cluster-dashboard-role

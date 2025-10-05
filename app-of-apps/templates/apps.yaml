@@ -30,12 +30,13 @@ spec:
         valueFiles:
         - '$values/apps/{{$key}}/values.yaml'
         - '$values/apps/{{$key}}/{{$metadata.clusterName}}.yaml'
-      kustomize:
-        commonLabels:
-          cluster-name: {{ $metadata.clusterName | quote }}
-          region: {{ $metadata.region | quote }}
-          account-id: {{ $metadata.accountId | quote }}
-          cloud: {{ $metadata.cloud | quote }}
+      plugin:
+        name: gomplate-helm
+        env:
+        - name: CLUSTER_VALUES_FILE
+          value: '$values/app-of-apps/{{$metadata.cloud}}/{{ $metadata.accountId }}/{{$metadata.region }}/{{$metadata.clusterName}}.yaml'
+        - name: VALUE_FILES
+          value: '-f $values/apps/{{$key}}/values.yaml -f $values/apps/{{$key}}/{{$metadata.clusterName}}.yaml'
     - repoURL: 'https://github.com/JacobAmar/argocd-applicationset-test'
       targetRevision: {{ $value.valuesRevision }}
       ref: values

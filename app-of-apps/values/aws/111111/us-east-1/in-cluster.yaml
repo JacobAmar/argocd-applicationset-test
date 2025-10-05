@@ -1,10 +1,9 @@
-metadata:
-  server: https://kubernetes.default.svc
-  cloud: aws
-  accountId: 111111
-  region: us-east-1
-  filename: in-cluster.yaml
-  clusterName: in-cluster
+server: https://kubernetes.default.svc
+cloud: aws
+accountId: 111111
+region: us-east-1
+filename: in-cluster.yaml
+clusterName: in-cluster
 
 applications:
   test-namespace:
