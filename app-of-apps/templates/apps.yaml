@@ -32,10 +32,10 @@ spec:
         - '$values/apps/{{$key}}/{{$metadata.clusterName}}.yaml'
       kustomize:
         commonLabels:
-          cluster-name: {{ $metadata.clusterName }}
-          region: {{ $metadata.region }}
-          account-id: {{ $metadata.accountId }}
-          cloud: {{ $metadata.cloud }}
+          cluster-name: {{ $metadata.clusterName | quote }}
+          region: {{ $metadata.region | quote }}
+          account-id: {{ $metadata.accountId | quote }}
+          cloud: {{ $metadata.cloud | quote }}
     - repoURL: 'https://github.com/JacobAmar/argocd-applicationset-test'
       targetRevision: {{ $value.valuesRevision }}
       ref: values
