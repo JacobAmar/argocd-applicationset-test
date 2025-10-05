@@ -7,9 +7,9 @@ applications:
       chartVersion: 0.2.0
       valuesRevision: HEAD
   kube-system:
-    kubernetes-dashboard:
+    hedgedoc:
       enabled: true
-      chartRepo: https://kubernetes.github.io/dashboard/
-      chartName: kubernetes-dashboard
-      chartVersion: 7.13.0
+      chartRepo: https://charts.adfinis.com
+      chartName: hedgedoc
+      chartVersion: 0.5.4
       valuesRevision: HEAD
