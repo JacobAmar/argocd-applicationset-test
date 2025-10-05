@@ -27,7 +27,6 @@ spec:
     path: app-of-apps  # This has no meaning for Helm charts pulled directly from a Helm repo instead of git.
 
     # helm specific config
-    chart: app-of-apps  # Set this when pulling directly from a Helm repo. DO NOT set for git-hosted Helm charts.
     helm:
       valueFiles:
       - app-of-apps/values/aws/111111/us-east-1/in-cluster.yaml
