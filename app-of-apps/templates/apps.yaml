@@ -30,6 +30,12 @@ spec:
         valueFiles:
         - '$values/apps/{{$key}}/values.yaml'
         - '$values/apps/{{$key}}/{{$metadata.clusterName}}.yaml'
+      kustomize:
+        commonLabels:
+          cluster-name: {{ $metadata.clusterName }}
+          region: {{ $metadata.region }}
+          account-id: {{ $metadata.accountId }}
+          cloud: {{ $metadata.cloud }}
     - repoURL: 'https://github.com/JacobAmar/argocd-applicationset-test'
       targetRevision: {{ $value.valuesRevision }}
       ref: values
