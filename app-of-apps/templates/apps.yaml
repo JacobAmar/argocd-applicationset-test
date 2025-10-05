@@ -37,8 +37,10 @@ spec:
       targetRevision: {{ $value.valuesRevision }}
       ref: values
       plugin:
-        name: gomplate-helm
+        name: helm-gomplate
         env:
+        - name: CHART_PATH
+          value: 'apps/{{$key}}'
         - name: CLUSTER_VALUES_FILE
           value: '$values/app-of-apps/{{$metadata.cloud}}/{{ $metadata.accountId }}/{{$metadata.region }}/{{$metadata.clusterName}}.yaml'
   

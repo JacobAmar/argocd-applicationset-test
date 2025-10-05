@@ -1,8 +1,16 @@
 repoServer:
+  volumes:
+   - name: argocd-cmp-cm
+     configMap:
+       name: argocd-cmp-cm
+   - name: cmp-tmp
+     emptyDir: {}
+
   extraContainers:
   - name: gomplate-helm
     image: pltsciart/helm-gomplate:latest
-    command: ["sh", "-c", "sleep infinity"]
+    command: [/var/run/argocd/argocd-cmp-server]
+    args: [--loglevel, debug]
     securityContext:
       runAsNonRoot: true
       runAsUser: 999
@@ -11,13 +19,24 @@ repoServer:
         name: var-files
       - mountPath: /home/argocd/cmp-server/plugins
         name: plugins
+      # Remove this volumeMount if you've chosen to bake the config file into the sidecar image.
+      - mountPath: /home/argocd/cmp-server/config/plugin.yaml
+        subPath: helm-gomplate.yaml
+        name: argocd-cmp-cm
+
 
 configs:
   cmp:
     create: true
     plugins:
-       generate:
-        command: ["sh", "-c"]
-        args:
-          - |
-            gomplate -c .=../../$CLUSTER_VALUES_FILE -f values.gotmpl.yaml -o values.yaml
+      helm-gomplate:
+        init:
+          command: ["sh", "-c"]
+          args:
+           - |
+             echo "generating values.yaml from ../$CLUSTER_VALUES_FILE"
+        generate:
+         command: ["sh", "-c"]
+         args:
+           - |
+             gomplate -c .=$CLUSTER_VALUES_FILE -f $CHART_PATH/values.gotmpl.yaml -o $CHART_PATH/values.yaml
