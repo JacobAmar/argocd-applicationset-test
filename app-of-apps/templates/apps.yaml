@@ -1,3 +1,4 @@
+{{- $metadata := .Values.metadata }}
 {{- range $namespace, $namespaceValue := .Values.applications }}
 {{- range $key, $value := $namespaceValue }}
 ---
