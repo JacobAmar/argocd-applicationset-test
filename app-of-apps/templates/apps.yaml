@@ -1,6 +1,7 @@
 {{- $metadata := .Values.metadata }}
 {{- range $namespace, $namespaceValue := .Values.applications }}
 {{- range $key, $value := $namespaceValue }}
+{{- if $value.enabled }}
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -59,5 +60,6 @@ spec:
         maxDuration: 10s
 
   revisionHistoryLimit: 2
+{{- end }}
 {{- end }}
 {{- end }}
