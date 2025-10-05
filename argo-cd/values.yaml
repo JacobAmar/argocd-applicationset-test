@@ -34,7 +34,7 @@ configs:
           command: ["sh", "-c"]
           args:
            - |
-             echo "generating values.yaml from ../$CLUSTER_VALUES_FILE"
+             helm pull $CHART_NAME --repo $CHART_REPO --version $CHART_VERSION --untar --untardir $CHART_PATH
         generate:
          command: ["sh", "-c"]
          args:
